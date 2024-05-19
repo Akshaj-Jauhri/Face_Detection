@@ -31,7 +31,7 @@ It is detected by upscaling the images for HoG by a factor of 2 to ensure better
 Speed: 
 HoG takes a longer time due to the upscaling required. Both the CNN methods outperform the other two in terms of speed. CNN-YOLO method however is faster as YOLO performs object detection in a single pass through the neural network compared to traditional object detection algorithms that use sliding windows or region-based approaches.
 Test Under Varying Conditions:
-  1. Scale:
+   1. Scale:
   The lib-based method i.e. HoG can detect faces of size up to ~(70×70) after which they fail to detect. As we discussed earlier, I think this is the major drawback of Dlib-based methods. Since it is impossible     to know the size of the face beforehand in most cases, we can get rid of this problem by upscaling the image, but then the speed advantage of dlib as compared to OpenCV-DNN goes away.
   Insert images of HoG with varying scales.
   2: Non-Frontal Face
