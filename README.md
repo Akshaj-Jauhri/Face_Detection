@@ -26,31 +26,41 @@ Speed: Discuss the inference speed of each model, considering real-time applicat
 Robustness: Evaluate how well each model performs under challenging conditions like varying lighting, occlusions, and scale variations.
 
 Findings and Discussion:
+
 Accuracy:
 It is detected by upscaling the images for HoG by a factor of 2 to ensure better results. Haar is the most inaccurate of the lot. Both the CNN methods do well in terms of accuracy and HoG is also quite accurate when upscaled.
+
 Speed: 
 HoG takes a longer time due to the upscaling required. Both the CNN methods outperform the other two in terms of speed. CNN-YOLO method however is faster as YOLO performs object detection in a single pass through the neural network compared to traditional object detection algorithms that use sliding windows or region-based approaches.
 Test Under Varying Conditions:
+
    1. Scale:
   The lib-based method i.e. HoG can detect faces of size up to ~(70×70) after which they fail to detect. As we discussed earlier, I think this is the major drawback of Dlib-based methods. Since it is impossible     to know the size of the face beforehand in most cases, we can get rid of this problem by upscaling the image, but then the speed advantage of dlib as compared to OpenCV-DNN goes away.
   Insert images of HoG with varying scales.
+
   2: Non-Frontal Face
   As expected, Haar based detector fails. The HoG-based detector does detect faces for left or right-looking faces (since it was trained on them ) but is not as accurate as the DNN-based detectors of OpenCV and     Dlib.
+  
   3. Occlusion
   The DNN-Caffe methods outperforms the others, even though it is slightly inaccurate. This is mainly because the CNN features are much more robust than HoG or Haar features.
   In general, the CNN Methods are more robust, providing better results in all conditions. The robustness of HoG depends on the scale of the images. It performs well with upscaled images but fails when faces are smaller.
 
 Conclusion
+
 General Case
+
 In most applications, we won’t know the face size in the image beforehand. Thus, it is better to use DNN-Caffe method as it is pretty-fast and very accurate, even for small sized faces. It also detects faces at various angles. We recommend using DNN-Caffe in most cases. However if your computer can handle high GPU Computations then we recommend DNN-YOLO.
 
 For medium to large image sizes
+
 Dlib HoG is the fastest method on the CPU. But it does not detect small sized faces ( < 70×70 ). So, if you know that your application will not be dealing with very small sized faces then HoG based Face detector is a better option.
 
 High-resolution images
+
 Since feeding high-resolution images is not possible with these algorithms ( for computation speed ), HoG detectors might fail when you scale down the image. On the other hand, the DNN-YOLO method can be used for these since it detects small faces.
 
 In essence
+
 Haar Cascade can be used in scenarios that require real-time applications with limited computational resources.
 DNN-Caffe can be used in applications where accuracy is critical and computational resources are sufficient.
 HoG Model might be preferable in applications where accuracy and speed is important but computational resources are limited.
